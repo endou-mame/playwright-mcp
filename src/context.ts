@@ -23,9 +23,12 @@ export class Context {
   private _initializePromise: Promise<void> | undefined;
 
   constructor(launchOptions: playwright.LaunchOptions) {
-    this._launchOptions = launchOptions;
+    this._launchOptions = {
+      ...launchOptions,
+      executablePath: process.env.PLAYWRIGHT_EXECUTABLE_PATH,
+    };
   }
-
+  
   async ensurePage(): Promise<playwright.Page> {
     await this._initialize();
     return this._page!;
